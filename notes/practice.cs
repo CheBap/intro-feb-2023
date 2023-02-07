@@ -1,7 +1,8 @@
 Console.WriteLine("Hello, World!");  while (true)
 {
     Console.Write("How old are you?: ");
-    var enteredAge = Console.ReadLine();     if (int.TryParse(enteredAge, out int age))
+    var enteredAge = Console.ReadLine();     
+if (int.TryParse(enteredAge, out int age))
     {
         Console.WriteLine($"You are {age} years old!");
         break;
