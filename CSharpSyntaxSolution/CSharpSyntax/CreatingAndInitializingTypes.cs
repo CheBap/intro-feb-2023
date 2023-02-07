@@ -1,4 +1,6 @@
-﻿namespace CSharpSyntax;
+﻿using System.Text;
+
+namespace CSharpSyntax;
 
 public class CreatingAndInitializingTypes
 {
@@ -40,6 +42,25 @@ public class CreatingAndInitializingTypes
         Taco lunch = new();
 
 
+    }
+
+    [Fact]
+    public void MoreAboutStrings()
+    {
+        var name = "Bob"; var age = 33; var message = "The name is " + name + " and the age is " + age + ".";
+        var message2 = string.Format("The name is {0} and the age is {1} (again, name: {0})", name, age);
+        var pay = 120_000.00M;
+        var m3 = $"{name} makes {pay:c} a year";
+    }
+
+    [Fact]
+    public void MutableStringsWithStringBuilders()
+    {
+        var message = new StringBuilder(); foreach (var num in Enumerable.Range(1, 10000))
+        {
+            message.Append(num.ToString() + ", ");
+        }
+        Assert.True(message.ToString().StartsWith("1, 2, 3, 4")); var myName = "Joe";
     }
 }
 
