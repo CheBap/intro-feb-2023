@@ -22,4 +22,24 @@ public class StringCalculatorTests
 
         Assert.Equal(1, result);
     }
+
+    [Fact]
+    public void Double()
+    {
+        var calculator = new StringCalculator();
+
+        var result = calculator.Add("1,2");
+
+        Assert.Equal(3, result);
+    }
+
+    [Fact]
+    public void ALot()
+    {
+        var calculator = new StringCalculator();
+
+        var result = calculator.Add("1,2,3,4,5");
+
+        Assert.Equal(15, result);
+    }
 }
