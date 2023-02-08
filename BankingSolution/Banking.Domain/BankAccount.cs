@@ -2,7 +2,7 @@
 
 public class BankAccount
 {
-    private decimal _balance = 5000M;
+    private decimal _balance = 5000M; // State - "Fields" variable.
     public void Deposit(decimal amountToDeposit)
     {
         _balance += amountToDeposit;
@@ -15,6 +15,21 @@ public class BankAccount
 
     public void Withdraw(decimal amountToWithdraw)
     {
-        _balance -= amountToWithdraw;
+        if (NotOverdraft(amountToWithdraw))
+        {
+            _balance -= amountToWithdraw;
+        }
+        else
+        {
+            throw new AccountOverdraftException();
+        }
+
+    }
+
+
+    // "Never type private, always refactor to it" - Corey Haines.
+    private bool NotOverdraft(decimal amountToWithdraw)
+    {
+        return _balance >= amountToWithdraw;
     }
 }
