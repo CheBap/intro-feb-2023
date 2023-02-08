@@ -52,4 +52,5 @@ public class StringCalculatorTests
 
         Assert.Equal(10, result);
     }
+
 }

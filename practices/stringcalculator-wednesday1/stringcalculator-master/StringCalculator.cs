@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.VisualBasic;
+using System.Numerics;
 
 namespace StringCalculator;
 
@@ -12,9 +13,9 @@ public class StringCalculator
         {
             return 0;
         }
-        else if(!numbers.Contains(",") || !numbers.Contains(","))
+        else if(!numbers.Contains(",") || !numbers.Contains("\n"))
         {
-            return 1;
+            return Int32.Parse(numbers);
         }
         else
         {
