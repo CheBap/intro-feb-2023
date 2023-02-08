@@ -42,4 +42,14 @@ public class StringCalculatorTests
 
         Assert.Equal(15, result);
     }
+
+    [Fact]
+    public void Extra()
+    {
+        var calculator = new StringCalculator();
+
+        var result = calculator.Add("1\n2,3,4");
+
+        Assert.Equal(10, result);
+    }
 }
