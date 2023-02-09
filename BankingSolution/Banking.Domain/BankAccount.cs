@@ -25,6 +25,8 @@ public class BankAccount
         if (NotOverdraft(amountToWithdraw))
         {
             _balance -= amountToWithdraw;
+
+            //_notifier.CheckForRequiredNotification(this, amountToWithdraw);
         }
         else
         {
