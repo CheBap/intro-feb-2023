@@ -3,9 +3,16 @@
 public class BankAccount
 {
     private decimal _balance = 5000M; // State - "Fields" variable.
+    private ICanCalculateAccountBonuses _bonusCalculator;
+
+    public BankAccount(ICanCalculateAccountBonuses bonusCalculator)
+    {
+        _bonusCalculator = bonusCalculator;
+    }
     public void Deposit(decimal amountToDeposit)
     {
-        _balance += amountToDeposit;
+        decimal bonus = _bonusCalculator.GetDepositBonusFor(_balance, amountToDeposit);
+        _balance += amountToDeposit + bonus;
     }
 
     public decimal GetBalance()
