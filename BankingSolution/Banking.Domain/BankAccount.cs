@@ -1,10 +1,19 @@
-﻿namespace Banking.Domain;
+﻿using System.Net.Security;
+
+namespace Banking.Domain;
 
 public class BankAccount
 {
     private decimal _balance = 5000M; // State - "Fields" variable.
+    public enum LoyaltyLevel { Standard, Gold};
+    public LoyaltyLevel Level;
     public void Deposit(decimal amountToDeposit)
     {
+        decimal bonus = 0;
+        if(Level == LoyaltyLevel.Gold)
+        {
+            bonus = amountToDeposit * .10M;
+        }
         _balance += amountToDeposit;
     }
 
