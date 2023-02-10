@@ -21,7 +21,7 @@ public class BankAccount
     {
         if (amountToDeposit < 0)
         {
-            throw new NotFiniteNumberException();
+            throw new NoNegativeNumbersException();
         }
     }
 
@@ -33,18 +33,17 @@ public class BankAccount
     public void Withdraw(decimal amountToWithdraw)
     {
         GuardNoNegativeAmountsForTransactions(amountToWithdraw);
+        GuardNoOverdraft(amountToWithdraw);
+        _balance -= amountToWithdraw;
 
-        if (NotOverdraft(amountToWithdraw))
-        {
-            _balance -= amountToWithdraw;
+    }
 
-            //_notifier.CheckForRequiredNotification(this, amountToWithdraw);
-        }
-        else
+    private void GuardNoOverdraft(decimal amountToWithdraw)
+    {
+        if (amountToWithdraw > _balance)
         {
             throw new AccountOverdraftException();
         }
-
     }
 
 

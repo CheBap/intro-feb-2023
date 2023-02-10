@@ -23,22 +23,43 @@ namespace BankingKiosk
 
         private void depositButton_Click(object sender, EventArgs e) //ctrl f5 to run
         {
-            var amount = decimal.Parse(amountInput.Text);
-            _account.Deposit(amount);
-            UpdateBalanceDisplay();
+            DoTransaction(_account.Deposit);
 
         }
 
         private void withdrawButton_Click(object sender, EventArgs e)
         {
-            DoTransaction();
+            DoTransaction(_account.Withdraw);
         }
 
-        private void DoTransaction()
+        private void DoTransaction(Action<decimal>op)
         {
-            var amount = decimal.Parse(amountInput.Text);
-            _account.Withdraw(amount);
-            UpdateBalanceDisplay();
+            try
+            {
+                var amount = decimal.Parse(amountInput.Text);
+                op(amount);
+                UpdateBalanceDisplay();
+            }
+            catch (FormatException)
+            {
+
+                MessageBox.Show("Enter a number, you moron.","Error on Transaction", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (AccountOverdraftException)
+            {
+                MessageBox.Show("You don't have enough money, get a job", "Error in Transaction", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                //run this if there is an error, or if there isn't an error. ALWAYS
+                amountInput.SelectAll(); //select all the text in the input
+                amountInput.Focus(); //put cursor there
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DoTransaction((amount) => MessageBox.Show("You clicked a button, blah" +amount.ToString())); //anonymous function
         }
     }
 }
