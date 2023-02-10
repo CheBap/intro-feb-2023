@@ -42,13 +42,17 @@ namespace BankingKiosk
             }
             catch (FormatException)
             {
-
-                MessageBox.Show("Enter a number, you moron.","Error on Transaction", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DisplayTransactionError("Enter a number, you moron");
+                //MessageBox.Show("Enter a number, you moron.","Error on Transaction", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (AccountOverdraftException)
             {
                 var message = "You don't have enough money, get a job";
                 DisplayTransactionError(message);
+            }
+            catch (NoNegativeNumbersException)
+            {
+                DisplayTransactionError("No Negative Numbers Allowed");
             }
             finally
             {
