@@ -32,10 +32,7 @@ public class BankAccount
 
     public void Withdraw(decimal amountToWithdraw)
     {
-        if (amountToWithdraw < 0)
-        {
-            throw new NotFiniteNumberException();
-        }
+        GuardNoNegativeAmountsForTransactions(amountToWithdraw);
 
         if (NotOverdraft(amountToWithdraw))
         {
