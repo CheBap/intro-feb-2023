@@ -47,7 +47,8 @@ namespace BankingKiosk
             }
             catch (AccountOverdraftException)
             {
-                MessageBox.Show("You don't have enough money, get a job", "Error in Transaction", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var message = "You don't have enough money, get a job";
+                DisplayTransactionError(message);
             }
             finally
             {
@@ -55,6 +56,11 @@ namespace BankingKiosk
                 amountInput.SelectAll(); //select all the text in the input
                 amountInput.Focus(); //put cursor there
             }
+        }
+
+        private static void DisplayTransactionError(string message)
+        {
+            MessageBox.Show(message, "Error in Transaction", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void button1_Click(object sender, EventArgs e)
