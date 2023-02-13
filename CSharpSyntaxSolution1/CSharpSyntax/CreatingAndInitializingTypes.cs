@@ -99,14 +99,13 @@ public class CreatingAndInitializingTypes
         string myPay = "10000.83";
 
 
-        if (decimal.TryParse(myPay, out decimal payAsNumber))
+        if(decimal.TryParse(myPay, out decimal payAsNumber))
         {
             Assert.Equal(10_000.83M, payAsNumber);
-        }
-        else
+        } else
         {
             Assert.True(false); // it should blow up here.
-
+            
         }
 
         var birthdate = DateTime.Parse("04/20/1969");

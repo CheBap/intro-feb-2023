@@ -1,4 +1,8 @@
 ﻿using LearningResourcesApi.Controllers;
+using LearningResourcesApi.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
+
 namespace LearningResourcesApi.IntegrationTests;
 
 public class StatusResourceTests
@@ -8,17 +12,64 @@ public class StatusResourceTests
     {
         await using var host = await AlbaHost.For<Program>();
 
-        var response = await host.Scenario(api =>//Integration test - usually has many steps
+        await host.Scenario(api => // Integration test - usually has many steps.
         {
             api.Get.Url("/status");
-            api.StatusCodeShouldBeOk(); //200 status code
+            api.StatusCodeShouldBeOk(); // 200 status code.
 
         });
 
-        var responseMessage = response.ReadAsJson<GetStatusResponse>();
+    }
 
+    [Fact]
+    public async Task TheContactIsAPhoneNumberDuringBusinessHours()
+    {
+        await using var host = await AlbaHost.For<Program>(builder =>
+        {
+            var stubbedSystemTime = new Mock<ISystemTime>();
+
+            stubbedSystemTime.Setup(c => c.GetCurrent()).Returns(TestData.BeforeCutoffTime);
+            //var dateToReturn = new DateTimeOffset()
+            builder.ConfigureServices(services =>
+            {
+                services.AddSingleton<ISystemTime>(stubbedSystemTime.Object);
+            });
+        });
+
+        var response = await host.Scenario(api => // Integration test - usually has many steps.
+        {
+            api.Get.Url("/status");
+        });
+
+        var responseMessage = response.ReadAsJson<GetStatusResponse>();
         Assert.NotNull(responseMessage);
-        Assert.Equal("All good", responseMessage.Message);
+        Assert.Equal("All Good", responseMessage.Message);
         Assert.Equal("555 555-5555", responseMessage.Contact);
+    }
+
+    [Fact]
+    public async Task TheContactIsAnEmailAfterBusinessHours()
+    {
+        await using var host = await AlbaHost.For<Program>(builder =>
+        {
+            var stubbedSystemTime = new Mock<ISystemTime>();
+
+            stubbedSystemTime.Setup(c => c.GetCurrent()).Returns(TestData.AfterCutoffTime);
+            //var dateToReturn = new DateTimeOffset()
+            builder.ConfigureServices(services =>
+            {
+                services.AddSingleton<ISystemTime>(stubbedSystemTime.Object);
+            });
+        });
+
+        var response = await host.Scenario(api => // Integration test - usually has many steps.
+        {
+            api.Get.Url("/status");
+        });
+
+        var responseMessage = response.ReadAsJson<GetStatusResponse>();
+        Assert.NotNull(responseMessage);
+        Assert.Equal("All Good", responseMessage.Message);
+        Assert.Equal("bob@aol.com", responseMessage.Contact);
     }
 }
