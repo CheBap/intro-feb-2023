@@ -10,6 +10,10 @@ import { AboutComponent } from './components/about/about.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { HttpClientModule } from '@angular/common/http'
 import { StatusDataService } from './services/status-data.service';
+import { CounterComponent } from './components/counter/counter.component';
+import { reducers } from './state';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -17,13 +21,16 @@ import { StatusDataService } from './services/status-data.service';
     ShoppingListComponent,
     DashboardComponent,
     AboutComponent,
-    NavigationComponent
+    NavigationComponent,
+    CounterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot(reducers),
+    StoreDevtoolsModule.instrument()
   ],
   providers: [StatusDataService],
   bootstrap: [AppComponent]
