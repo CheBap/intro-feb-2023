@@ -14,6 +14,7 @@ import { CounterComponent } from './components/counter/counter.component';
 import { reducers } from './state';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { CounterPrefsComponent } from './components/counter-prefs/counter-prefs.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     DashboardComponent,
     AboutComponent,
     NavigationComponent,
-    CounterComponent
+    CounterComponent,
+    CounterPrefsComponent
   ],
   imports: [
     BrowserModule,

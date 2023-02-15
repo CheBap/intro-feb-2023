@@ -20,5 +20,6 @@ const initialState: counterState = {
 
 export const reducer = createReducer(initialState,
     on(counterEvents.countIncremented, (currentState) => ({ ...currentState, current: currentState.current + 1 })),
-    on(counterEvents.countDecremented, (s) => ({ ...s, current: s.current - 1 }))
+    on(counterEvents.countDecremented, (s) => ({ ...s, current: s.current - 1 })),
+    on(counterEvents.countReset, () => initialState)
 );
