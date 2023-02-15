@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { selectCounterCountingBy } from 'src/app/state';
+import { CountByValues, counterEvents } from 'src/app/state/actions/counter.actions';
 
 @Component({
   selector: 'app-counter-prefs',
@@ -7,4 +10,10 @@ import { Component } from '@angular/core';
 })
 export class CounterPrefsComponent {
 
+  by$ = this.store.select(selectCounterCountingBy);
+  constructor(private store: Store) { }
+
+  setCountBy(by: CountByValues) {
+    this.store.dispatch(counterEvents.countBySet({ by }))
+  }
 }

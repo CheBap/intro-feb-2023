@@ -15,6 +15,8 @@ import { reducers } from './state';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { CounterPrefsComponent } from './components/counter-prefs/counter-prefs.component';
+import { EffectsModule } from '@ngrx/effects';
+import { CounterEffects } from './state/effects/counter.effects';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { CounterPrefsComponent } from './components/counter-prefs/counter-prefs.
     ReactiveFormsModule,
     HttpClientModule,
     StoreModule.forRoot(reducers),
-    StoreDevtoolsModule.instrument()
+    StoreDevtoolsModule.instrument(),
+    EffectsModule.forRoot([CounterEffects])
   ],
   providers: [StatusDataService],
   bootstrap: [AppComponent]
