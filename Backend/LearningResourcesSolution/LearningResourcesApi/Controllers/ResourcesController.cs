@@ -25,6 +25,31 @@ public class ResourcesController :ControllerBase
         public string Link { get; init; } = "";
     }
 
+    [HttpGet("/resources/{id:int}")]
+    public async Task<ActionResult> GetById(int id)
+    {
+        var response = await _context.Items
+            .Where(item => item.Id == id)
+            .Select(item => new GetResourceItem
+            {
+                Id = item.Id.ToString(),
+                Description = item.Description,
+                Link = item.Link,
+                Type = item.Type
+            }).SingleOrDefaultAsync();
+
+        if(response == null)
+        {
+            return NotFound();
+        }
+        else
+        {
+            return Ok(response);
+        }
+
+        return Ok($"Getting {id}");
+    }
+
     [HttpPost("/resources")]
     public async Task<ActionResult> AddItem([FromBody] CreateResourceItem request)
     {
@@ -66,7 +91,8 @@ public class ResourcesController :ControllerBase
      Description = item.Description,
      Link = item.Link,
      Type = item.Type
- }).ToListAsync(); var response = new GetResourcesResponse { Items = items };
+ }).ToListAsync(); 
+        var response = new GetResourcesResponse { Items = items };
         return Ok(response);
     }
 }
